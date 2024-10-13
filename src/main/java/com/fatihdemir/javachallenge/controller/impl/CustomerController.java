@@ -1,6 +1,6 @@
 package com.fatihdemir.javachallenge.controller.impl;
 
-import com.fatihdemir.javachallenge.Util.IpAdressUtil;
+import com.fatihdemir.javachallenge.util.IpAdressUtil;
 import com.fatihdemir.javachallenge.controller.ICustomerController;
 import com.fatihdemir.javachallenge.dto.customer.DtoCustomer;
 import com.fatihdemir.javachallenge.dto.customer.DtoCustomerIU;

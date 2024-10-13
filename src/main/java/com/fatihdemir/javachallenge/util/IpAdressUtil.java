@@ -1,4 +1,4 @@
-package com.fatihdemir.javachallenge.Util;
+package com.fatihdemir.javachallenge.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 

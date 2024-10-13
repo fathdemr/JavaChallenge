@@ -2,9 +2,13 @@ package com.fatihdemir.javachallenge.services.impl;
 
 import com.fatihdemir.javachallenge.dto.product.DtoProduct;
 import com.fatihdemir.javachallenge.dto.product.DtoProductIU;
+import com.fatihdemir.javachallenge.entity.Cart;
 import com.fatihdemir.javachallenge.entity.Product;
+import com.fatihdemir.javachallenge.repository.CartItemRepository;
+import com.fatihdemir.javachallenge.repository.CartRepository;
 import com.fatihdemir.javachallenge.repository.ProductRepository;
 import com.fatihdemir.javachallenge.services.IProductService;
+import com.fatihdemir.javachallenge.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,12 @@ public class ProductService implements IProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CartRepository cartRepository;
+    @Autowired
+    private CartService cartService;
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
     @Override
     public DtoProduct createProduct(DtoProductIU dtoProductIU,String clientIP) {
@@ -87,7 +97,18 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public DtoProduct deleteProduct(DtoProductIU dtoProductIU) {
-        return null;
+    public String deleteProduct(UUID productId) {
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
+
+        List<Cart> carts = cartRepository.findCartsByProductId(productId);
+
+        carts.forEach(cart -> cartService.deleteProductFromCart(cart.getId(), productId));
+
+        productRepository.delete(product);
+
+        return "Product with productId: " + productId + " deleted successfully !!!";
     }
+
 }

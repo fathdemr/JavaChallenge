@@ -2,10 +2,14 @@ package com.fatihdemir.javachallenge.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,6 +23,11 @@ public class Product extends BaseEntityAudit {
     private Double productPrice;
 
     private Long productQuantity;
+
+    @OneToMany(mappedBy = "product")
+    private List<CartItem> products = new ArrayList<>();
+
+
 
     //private Double productLastPrice; // Product'ın eski fiyatı tutulur.
 

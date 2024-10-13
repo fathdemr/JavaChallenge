@@ -1,11 +1,12 @@
 package com.fatihdemir.javachallenge.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -14,10 +15,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Cart extends BaseEntityAudit{
 
+    @OneToMany(mappedBy = "cart")
+    private List<CartItem> cartItems = new ArrayList<>();
 
-
-
-    @OneToOne(mappedBy = "cart")
+    @OneToOne
     private Customer customer;
+
+    private Double totalPrice = 0.0;
 
 }

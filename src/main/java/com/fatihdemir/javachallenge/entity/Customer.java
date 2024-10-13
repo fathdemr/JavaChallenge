@@ -23,8 +23,7 @@ public class Customer extends BaseEntityAudit {
 
     private String phoneNumber;
 
-    @OneToOne
+    @OneToOne(mappedBy = "customer")
     private Cart cart;
-
 
 }

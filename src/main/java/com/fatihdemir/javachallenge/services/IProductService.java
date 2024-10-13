@@ -16,6 +16,6 @@ public interface IProductService {
 
     public DtoProduct updateProduct(UUID productId, DtoProductIU dtoProductIU, String clientIP);
 
-    public DtoProduct deleteProduct(DtoProductIU dtoProductIU);
+    public String deleteProduct(UUID productId);
 
 }
