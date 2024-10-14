@@ -7,6 +7,8 @@ import com.fatihdemir.javachallenge.dto.product.DtoProductIU;
 import com.fatihdemir.javachallenge.services.impl.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,5 +45,12 @@ public class ProductController implements IProductController {
     public DtoProduct updateProduct(@PathVariable(name = "productId") UUID productId, @RequestBody DtoProductIU dtoProductIU, HttpServletRequest request) {
         String clientIp = IpAdressUtil.getClientIp(request);
         return productService.updateProduct(productId, dtoProductIU, clientIp);
+    }
+
+    @DeleteMapping("/delete/{productId}")
+    public ResponseEntity<String> deleteProduct(@PathVariable(name = "productId") UUID productId) {
+        String status = productService.deleteProduct(productId);
+
+        return new ResponseEntity<String>(status, HttpStatus.OK);
     }
 }
