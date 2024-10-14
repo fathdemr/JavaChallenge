@@ -1,5 +1,6 @@
 package com.fatihdemir.javachallenge.controller.impl;
 
+import com.fatihdemir.javachallenge.controller.IOrderController;
 import com.fatihdemir.javachallenge.dto.order.DtoOrderIU;
 import com.fatihdemir.javachallenge.services.impl.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/order")
-public class OrderController {
+public class OrderController implements IOrderController {
 
     @Autowired
     private OrderService orderService;

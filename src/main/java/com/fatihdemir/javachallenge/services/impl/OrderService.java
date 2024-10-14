@@ -7,6 +7,7 @@ import com.fatihdemir.javachallenge.entity.*;
 import com.fatihdemir.javachallenge.exceptions.ResourceNotFoundException;
 import com.fatihdemir.javachallenge.exceptions.ShowException;
 import com.fatihdemir.javachallenge.repository.*;
+import com.fatihdemir.javachallenge.services.IOrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
-public class OrderService {
+public class OrderService implements IOrderService {
 
     @Autowired
     public CustomerRepository customerRepository;
@@ -31,12 +31,6 @@ public class OrderService {
 
     @Autowired
     public OrderItemRepository orderItemRepository;
-
-    @Autowired
-    public CartItemRepository cartItemRepository;
-
-    @Autowired
-    public CustomerService customerService;
 
     @Autowired
     public CartService cartService;
