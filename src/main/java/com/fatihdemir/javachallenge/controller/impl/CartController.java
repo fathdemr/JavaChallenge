@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,10 +20,10 @@ public class CartController implements ICartController {
     @Autowired
     private CartService cartService;
 
-    @PostMapping("/{userId}/products/{productId}/quantity/{quantity}")
-    public ResponseEntity<DtoCart> addProductToCart(@PathVariable UUID userId, @PathVariable UUID productId, @PathVariable Long quantity, HttpServletRequest request) {
+    @PostMapping("customer/{customerId}/products/{productId}/quantity/{quantity}")
+    public ResponseEntity<DtoCart> addProductToCart(@PathVariable UUID customerId, @PathVariable UUID productId, @PathVariable Long quantity, HttpServletRequest request) {
         String clientIP = IpAdressUtil.getClientIp(request);
-        DtoCart dtoCart = cartService.addProductToCart(userId, productId, quantity, clientIP);
+        DtoCart dtoCart = cartService.addProductToCart(customerId, productId, quantity, clientIP);
 
         return new ResponseEntity<DtoCart>(dtoCart, HttpStatus.CREATED);
     }

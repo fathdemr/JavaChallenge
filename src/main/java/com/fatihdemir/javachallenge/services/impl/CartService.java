@@ -49,7 +49,7 @@ public class CartService implements ICartService {
     public DtoCart addProductToCart(UUID customerId, UUID productId, Long quantity, String clientIp) {
 
         Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "userId", customerId));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer", "customerId", customerId));
 
         Cart cart = new Cart();
 

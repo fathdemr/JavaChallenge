@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "customers")
@@ -26,4 +29,6 @@ public class Customer extends BaseEntityAudit {
     @OneToOne(mappedBy = "customer")
     private Cart cart;
 
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
 }

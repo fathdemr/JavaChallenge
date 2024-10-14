@@ -27,7 +27,8 @@ public class Product extends BaseEntityAudit {
     @OneToMany(mappedBy = "product")
     private List<CartItem> products = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "product")
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     //private Double productLastPrice; // Product'ın eski fiyatı tutulur.
 
