@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>WebSocket Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stomp-websocket@2.3.4-next/lib/stomp.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<h1>WebSocket Test</h1>
+<script th:inline="javascript">
+    const socket = new SockJS('websocket');
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+
+        stompClient.subscribe('/topic/cart-count/0fdcd36c-8199-4033-889d-aa68d3567670' , function (message) {
+            console.log('Received message:', message.body);
+            document.getElementById('cart-count').innerText = message.body;
+            alert('Received message: ' + message.body);
+        });
+    }, function (error) {
+        console.error('Connection error:', error);
+    });
+</script>
+
+<div>Ürün Sepet Sayısı: <span id="cart-count">0</span></div>
+
+</body>
+</html>
