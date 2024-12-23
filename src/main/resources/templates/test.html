@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
 <head>
     <title>WebSocket Test</title>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
@@ -17,7 +18,7 @@
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
 
-        stompClient.subscribe('/topic/cart-count/0fdcd36c-8199-4033-889d-aa68d3567670' , function (message) {
+        stompClient.subscribe('/topic/cart-count/f36911dd-dba8-4cf5-b6eb-32fba832401e' , function (message) {
             console.log('Received message:', message.body);
             document.getElementById('cart-count').innerText = message.body;
             alert('Received message: ' + message.body);

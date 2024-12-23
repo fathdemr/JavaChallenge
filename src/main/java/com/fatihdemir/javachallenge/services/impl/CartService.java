@@ -17,16 +17,21 @@ import com.fatihdemir.javachallenge.repository.CartRepository;
 import com.fatihdemir.javachallenge.repository.ProductRepository;
 import com.fatihdemir.javachallenge.services.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
 public class CartService implements ICartService {
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @Autowired
     private CartRepository cartRepository;
@@ -42,6 +47,19 @@ public class CartService implements ICartService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    public CartService(SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
+    }
+
+    private final ConcurrentHashMap<UUID, Integer> productCartCount = new ConcurrentHashMap<>();
+
+    private void notifyProductCartCountChange(UUID productId) {
+        int count = productCartCount.getOrDefault(productId, 0);
+        System.out.println("Notifying cart count for product " + productId + ": " + count);
+        messagingTemplate.convertAndSend("/topic/cart-count/" + productId, count);
+    }
 
 
     @Override
@@ -106,6 +124,9 @@ public class CartService implements ICartService {
                 .map(p -> modelMapper.map(p.getProduct(), DtoProductIU.class)).collect(Collectors.toList());
 
         dtoCartIU.setProducts(dtoProductIU);
+
+        productCartCount.merge(productId, 1, Integer::sum);
+        notifyProductCartCountChange(productId);
 
         return dtoCartIU;
     }

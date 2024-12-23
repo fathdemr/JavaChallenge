@@ -9,7 +9,7 @@ int main() {
     curl = curl_easy_init();
 
     if (curl) {
-        const char *url = "http://localhost:8082/api/cart/customer/0ab09e94-a1e6-4ebf-8581-f1cd4267eee4/products/0fdcd36c-8199-4033-889d-aa68d3567670/quantity/1";
+        const char *url = "http://localhost:8083/api/cart/customer/0ab09e94-a1e6-4ebf-8581-f1cd4267eee4/products/0fdcd36c-8199-4033-889d-aa68d3567670/quantity/1";
 
         curl_easy_setopt(curl, CURLOPT_URL, url);
 
